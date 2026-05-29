@@ -139,6 +139,18 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01e
 .agenda-name {
   font-family: var(--serif); font-size: clamp(22px, 2.2vw, 32px); font-weight: 600;
   letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 14px;
+}
+.agenda-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--line-soft);
+}
+.modal-avatar {
+  width: 22px; height: 22px; border-radius: 50%;
+  object-fit: cover; vertical-align: -6px;
+  margin-right: 8px;
+  border: 1px solid var(--line-soft);
 }
 .agenda-event { color: var(--muted); font-size: 15px; }
 .agenda-room { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -243,6 +255,29 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01e
 
 .prof-sidebar {
   position: sticky; top: 20px; align-self: start;
+}
+.prof-photo-wrap {
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  margin-bottom: 24px;
+  background: var(--cream-deep);
+  box-shadow: 0 6px 20px rgba(20, 16, 8, 0.08);
+}
+.prof-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.08) contrast(1.02);
+  transition: filter .2s ease, transform .4s ease;
+}
+.prof-photo-wrap:hover .prof-photo {
+  filter: grayscale(0) contrast(1.05);
+  transform: scale(1.04);
+}
+@media (max-width: 900px) {
+  .prof-photo-wrap { width: 120px; height: 120px; }
 }
 .prof-slot {
   font-family: var(--mono); font-size: 12px;

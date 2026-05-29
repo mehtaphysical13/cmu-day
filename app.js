@@ -39,7 +39,7 @@ function renderAgenda() {
     }
     return `<a class="agenda-row" href="#${f.id}" data-target="${f.id}">
       <span class="agenda-time">${row.time}</span>
-      <span class="agenda-name">${f.name}</span>
+      <span class="agenda-name"><img class="agenda-avatar" src="img/${f.id}.jpg" alt="" loading="lazy" />${f.name}</span>
       <span class="agenda-event">${row.event}</span>
       <span class="agenda-room">${row.room}</span>
     </a>`;
@@ -117,6 +117,7 @@ function renderFaculty() {
     return `<article id="${f.id}" class="prof-card" data-themes="${f.themes.join(",")}">
       <div class="prof-grid">
         <aside class="prof-sidebar">
+          <div class="prof-photo-wrap"><img class="prof-photo" src="img/${f.id}.jpg" alt="${f.name}" loading="lazy" /></div>
           <div class="prof-slot">${f.slot} · ${f.location}</div>
           <h2 class="prof-name">${f.name}</h2>
           <div class="prof-title">${f.title}</div>
@@ -209,15 +210,25 @@ function renderNetwork() {
       d="M${e.pa.x},${e.pa.y} Q${e.cxp},${e.cyp} ${e.pb.x},${e.pb.y}"
       stroke-width="${1 + e.weight}" />`;
   });
+  // Build clip-path defs for circular photos
+  let defs = '<defs>';
+  Object.values(positions).forEach(p => {
+    defs += `<clipPath id="clip-${p.id}"><circle r="24" /></clipPath>`;
+  });
+  defs += '</defs>';
+  svgContent = defs + svgContent;
+
   Object.values(positions).forEach(p => {
     const f = facById[p.id];
     if (!f) return;
     const color = D.themes[f.themes[0]]?.color || "#333";
     const last = f.name.split(" ").slice(-1)[0];
     svgContent += `<g class="node" data-id="${f.id}" transform="translate(${p.x},${p.y})">
-      <circle r="18" fill="white" stroke="${color}" stroke-width="2" />
-      <text class="node-label" text-anchor="middle" y="-26">${last}</text>
-      <text class="node-role" text-anchor="middle" y="38">${D.themes[f.themes[0]].label}</text>
+      <circle r="26" fill="white" stroke="${color}" stroke-width="2" />
+      <image href="img/${f.id}.jpg" x="-24" y="-24" width="48" height="48" clip-path="url(#clip-${f.id})" />
+      <circle r="24" fill="none" stroke="${color}" stroke-width="0.8" opacity="0.6" />
+      <text class="node-label" text-anchor="middle" y="-34">${last}</text>
+      <text class="node-role" text-anchor="middle" y="46">${D.themes[f.themes[0]].label}</text>
     </g>`;
   });
   svg.innerHTML = svgContent;
@@ -290,7 +301,7 @@ function openPaperModal(pid) {
   const matterHtml = p.matter ? `<div class="modal-section"><h4>Why this matters for the meeting</h4><p>${p.matter}</p></div>` : "";
 
   content.innerHTML = `
-    <div class="modal-eyebrow">${owner.name} · ${owner.lab}</div>
+    <div class="modal-eyebrow"><img class="modal-avatar" src="img/${owner.id}.jpg" alt="" />${owner.name} · ${owner.lab}</div>
     <h3 class="modal-title" id="modal-title">${p.title}</h3>
     <div class="modal-meta">${p.venue} · ${p.year}${p.starred ? " · ★ priority read" : ""}</div>
     <div class="modal-authors">${p.authors}</div>
