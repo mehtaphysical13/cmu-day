@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.google.com)",
+      "Bash(curl -sL \"https://docs.google.com/document/d/1R8EwE2EVZ7q6cYscn-xVHH8ksO_XG8HVLRTtL5F7NUQ/export?format=txt\")",
+      "WebSearch",
+      "WebFetch(domain:www.cs.cmu.edu)",
+      "WebFetch(domain:zackory.com)",
+      "WebFetch(domain:www.humansensing.cs.cmu.edu)",
+      "WebFetch(domain:www.ri.cmu.edu)",
+      "WebFetch(domain:maartensap.com)",
+      "WebFetch(domain:www.cmu.edu)",
+      "WebFetch(domain:imaging.cs.cmu.edu)",
+      "WebFetch(domain:multicomp.cs.cmu.edu)",
+      "WebFetch(domain:lti.cs.cmu.edu)"
+    ]
+  }
+}

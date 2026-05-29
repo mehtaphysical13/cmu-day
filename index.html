@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CMU AI Research Day · Jun 1, 2026 · Briefing</title>
+  <meta name="description" content="Interactive briefing for the CMU AI Research Day visit on June 1, 2026 — research, papers, and partnership angles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- =========================== HERO =========================== -->
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-meta">
+      <span class="tag tag--red">CMU AI Research Day</span>
+      <span class="tag">Briefing for Nick Mehta</span>
+    </div>
+    <h1 class="hero-title">
+      Nine professors.<br/>
+      <span class="hero-title-accent">One day in Pittsburgh.</span>
+    </h1>
+    <p class="hero-sub">
+      Monday <strong>June 1, 2026</strong> — Smith Hall, Newell-Simon, Gates-Hillman, Margaret Morrison.
+      Vision, generative AI, robotics, multimodal, NLP, climate. The faculty, their actual recent papers,
+      the verified cross-collaborations, and the partnership angles worth pushing on.
+    </p>
+    <div class="hero-actions">
+      <a href="#agenda" class="btn btn--primary">Day at a glance →</a>
+      <a href="#connections" class="btn">See the network ↘</a>
+      <a href="#delatorre" class="btn">Start with the first meeting →</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num" id="stat-faculty">10</span><span class="stat-label">faculty</span></div>
+      <div><span class="stat-num" id="stat-papers">0</span><span class="stat-label">recent papers</span></div>
+      <div><span class="stat-num" id="stat-connections">0</span><span class="stat-label">verified collaborations</span></div>
+      <div><span class="stat-num" id="stat-angles">0</span><span class="stat-label">commercialization angles</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================== AGENDA =========================== -->
+<section id="agenda" class="section">
+  <div class="section-head">
+    <h2>The Day</h2>
+    <p class="section-sub">Click any slot to jump to the briefing.</p>
+  </div>
+  <div class="agenda" id="agenda-list"></div>
+</section>
+
+<!-- =========================== THREADS =========================== -->
+<section id="threads" class="section section--dark">
+  <div class="section-head">
+    <h2>Cross-cutting threads</h2>
+    <p class="section-sub">Where the faculty actually overlap. Useful for finding the partnership shape.</p>
+  </div>
+  <div class="threads" id="threads-list"></div>
+</section>
+
+<!-- =========================== CONNECTIONS GRAPH =========================== -->
+<section id="connections" class="section">
+  <div class="section-head">
+    <h2>Verified collaborations</h2>
+    <p class="section-sub">Edges are real co-authored papers (or documented lineage). Hover a node.</p>
+  </div>
+  <div class="network-wrap">
+    <svg id="network" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid meet"></svg>
+    <aside class="network-detail" id="network-detail">
+      <p class="muted">Click or hover a node.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- =========================== FILTER STRIP =========================== -->
+<section class="section section--filter">
+  <div class="section-head section-head--inline">
+    <h2>Faculty briefings</h2>
+    <p class="section-sub">In agenda order. Filter by theme.</p>
+  </div>
+  <div class="filter-strip" id="filter-strip"></div>
+</section>
+
+<!-- =========================== FACULTY CARDS =========================== -->
+<main id="faculty-list"></main>
+
+<!-- =========================== FOOTER =========================== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <strong>CMU AI Research Day</strong> · Jun 1, 2026 · Pittsburgh
+    </div>
+    <div class="muted">
+      Briefing assembled from faculty pages, Google Scholar, arXiv, and verified co-authorships.
+      Reach the source via the links on each card.
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
