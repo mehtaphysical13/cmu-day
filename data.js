@@ -52,7 +52,13 @@ window.CMU_DATA = {
           link: "https://arxiv.org/abs/2501.03624",
           summary: "Uses open-source LLMs (Qwen 2.5-72b among them) to score clinical depression interviews on the MADRS scale from transcripts alone, with zero-shot prompting. Tested on 236 real interviews from the CAMI dataset; reaches near-human inter-rater agreement on most items.",
           starred: true,
-          coauthors: ["morency"]
+          coauthors: ["morency"],
+          extended: [
+            "MADRS — the Montgomery-Åsberg Depression Rating Scale — is the gold-standard clinician-administered depression instrument, traditionally requiring a trained psychiatrist to conduct and score a structured interview. LlaMADRS takes the transcript of that interview and asks an open-source large language model to produce the per-item severity scores, using only carefully designed zero-shot prompts with no fine-tuning. The team evaluated the approach on 236 real-world clinical interviews from the Context-Adaptive Multimodal Informatics (CAMI) dataset collected at McLean Hospital.",
+            "The headline result: Qwen 2.5-72b reaches Intraclass Correlation Coefficients with the human rater that approach inter-rater agreement between two trained humans on most MADRS items. That's the bar that has historically separated 'interesting research signal' from 'clinically usable measurement,' and crossing it on a real clinical corpus — not a synthetic benchmark — is the meaningful step. It also matters that the work uses open models: a clinical product can be deployed inside a hospital or device without piping PHI to a frontier-model API.",
+            "For Nick: this is the clearest 'this could become a reimbursable product' artifact on the entire day's agenda. The natural commercial wrappers are (a) a behavioral measurement service for pharma CNS trials, billing on a per-trial-visit basis, or (b) a clinical decision-support tool delivering MADRS-equivalent scores into the EHR after telehealth sessions. Both De la Torre and Morency are co-authors — meaning the same conversation can cover both faculty and both labs simultaneously."
+          ],
+          matter: "The most concrete cross-faculty paper of the day, and the cleanest near-term clinical product on the list. Ask whether they're open to advising or licensing this out."
         },
         {
           title: "GHOST: Generative Human Motion in Open-vocabulary Scene and Text Contexts",
@@ -116,7 +122,13 @@ window.CMU_DATA = {
           link: "https://scholar.google.com/scholar?q=Virtual+home+staging+relighting+panorama+Narasimhan",
           summary: "Single HDR panorama in, photo-realistic relit and re-furnished interior out — under measured outdoor illumination. Joint inverse rendering with a building-science co-author solves a real real-estate / design pain point.",
           starred: true,
-          coauthors: ["sawyer"]
+          coauthors: ["sawyer"],
+          extended: [
+            "The system takes one HDR panorama of an interior plus a paired outdoor HDR capture, decomposes the scene into geometry, materials, and a spatially-varying outdoor lighting model, and then re-renders the room with new furniture under a different lighting condition (different time of day, different weather, different climate). The technical lift is the inverse-rendering step from a single image — historically this requires multi-view capture, depth sensors, or strong priors. Here the outdoor HDR provides the lighting prior that anchors the indoor relighting.",
+            "What makes this a meaningful artifact for the visit is the co-authorship: a Robotics Institute computational-imaging PI and a School of Architecture building-science PI co-publishing in Machine Vision and Applications. That's the verified RI × Architecture bridge of the day, and it tells you the two of them already speak each other's language. The same pipeline plausibly extends to retrofit visualization (show me this façade after I add shading), real-estate staging, and digital-twin lighting analysis for whole neighborhoods.",
+            "For Nick: there's a real-estate-tech / AEC product hiding in this pipeline. Possible commercial wrappers include a Zillow-grade virtual staging API (one panorama in, photoreal furnished options out), a retrofit-visualization tool for AEC firms, and a daylight-analysis service for buyers. The combined Narasimhan-Sawyer skill stack is unusually complete for any of those."
+          ],
+          matter: "The single verified RI × Architecture collaboration of the day. Probe it as a joint product opportunity — Narasimhan in the morning, Sawyer in the afternoon, both can confirm appetite."
         },
         {
           title: "Instance-Warp: Saliency Guided Image Warping for Unsupervised Domain Adaptation",
@@ -186,7 +198,13 @@ window.CMU_DATA = {
           year: 2026,
           link: "https://arxiv.org/abs/2508.15773",
           summary: "Inference-time technique that produces a *group* of mutually-diverse high-quality outputs instead of one sample — directly addresses the 'all variations look the same' failure mode in creator tools.",
-          starred: true
+          starred: true,
+          extended: [
+            "Modern diffusion samplers are tuned to maximize per-sample quality, which has the side effect of collapsing the distribution: ask for four variations of a prompt and you get four near-duplicates. Group inference reframes the problem by jointly optimizing a *batch* of outputs to be mutually diverse while each remaining individually high-quality, all at inference time without retraining the base model. The method scales to dozens of simultaneous samples and works across image and video generators.",
+            "This is a quietly important paper for product builders because the failure mode it fixes — 'the four options the model shows me are basically the same' — is the single most-cited complaint about consumer generative tools. It also dovetails with Zhu's broader thesis that controllable, deterministic, high-throughput inference is the bottleneck for creator UX, not raw fidelity.",
+            "For Nick: any product whose UX depends on offering meaningful variations (Figma-for-image, Premiere-for-AI-video, ad-creative platforms) gets a noticeable lift from this technique without any model retraining cost. It's the kind of result that should land in production stacks within a year."
+          ],
+          matter: "The 'show me real variations' fix every creator-tool product needs. Practical, inference-time, no retraining required."
         },
         {
           title: "Learning an Image Editing Model without Image Editing Pairs",
@@ -211,7 +229,13 @@ window.CMU_DATA = {
           year: 2025,
           link: "https://peterwang512.github.io/FastGDA/",
           summary: "Practical data-attribution method that traces which training images most influenced a given generated image — fast enough to run inline. The infrastructure prerequisite for any payable royalty layer.",
-          starred: true
+          starred: true,
+          extended: [
+            "Data attribution for diffusion models has been an academic curiosity for two years: in principle you can identify which training images most influenced a given generation, but the existing methods require gradient computations over the full training set per query and don't run at inference-time latency. FastGDA reframes the computation so attribution scores can be produced inline, in the same order of magnitude as a normal generation step.",
+            "The implication is that 'who-gets-paid-when-this-image-is-generated' moves from theoretical to engineerable. Once attribution is inference-time, you can route micropayments to the influence-weighted set of training-data rights holders in real time — which is the missing infrastructure layer for any fair-compensation marketplace built on top of generative AI.",
+            "For Nick: this is the academic prototype of the missing royalty/credit layer for generative platforms. The startup wrapper is an attribution-as-a-service company that sells the inline scoring engine to model labs and creator marketplaces (Adobe Stock, Shutterstock, Getty, indie collectives). Zhu has kept the work open-source — meaning a startup competes on infrastructure, marketplaces, and legal partnerships, not on the algorithm itself."
+          ],
+          matter: "The technical prerequisite for any 'fair compensation for generative AI' business. Ask if anyone is building on top of it."
         },
         {
           title: "Generating Physically Stable and Buildable Brick Structures from Text",
@@ -282,7 +306,13 @@ window.CMU_DATA = {
           year: 2026,
           link: "https://sites.google.com/view/bitetiming/",
           summary: "Wearable sensor predicts when a person is ready to take the next bite during robot-assisted feeding — making the difference between an awkward demo and a usable mealtime assistant.",
-          starred: true
+          starred: true,
+          extended: [
+            "Robot-assisted feeding has been a recurring HRI demo for a decade, and it has always failed the same way: the robot brings food to the mouth on the wrong timing — too fast, too slow, or while the user is mid-swallow. WAFFLE places a small wearable sensor on the user that predicts the optimal next-bite moment from physiological and motion signals, and feeds that timing prediction into the robot's policy.",
+            "The headline isn't the sensor; it's that adding this single signal converts the feeding behavior from 'demo' to 'usable.' The paper won HRI 2026 Best Paper because the field recognized that bite-timing was the unsolved-but-tractable subproblem holding back the entire assistive-feeding category. It also shows the lab's pattern: take one assistive ADL (Activity of Daily Living), identify the specific signal that's missing, build the smallest device that fills it.",
+            "For Nick: robot-assisted feeding has a clear payer story (Medicare/Medicaid waivers, VA, long-term care insurance) and a clear hardware substrate (Hello Robot Stretch, the platform Erickson's group uses extensively). WAFFLE is the kind of subsystem that turns 'we have a research robot' into 'we have a product we can pilot in a memory-care facility next quarter.'"
+          ],
+          matter: "HRI 2026 Best Paper. The bite-timing fix is what converts robot-assisted feeding from demo to deployable — a real near-term product pillar."
         },
         {
           title: "Bidirectional Human-Robot Communication for Physical Human-Robot Interaction",
@@ -307,7 +337,13 @@ window.CMU_DATA = {
           year: 2024,
           link: "https://sites.google.com/view/hat2-teleop/",
           summary: "Real deployment: a person with quadriplegia teleoperates a Stretch mobile manipulator in their home using a custom wearable interface. The clearest 'this would be a product tomorrow' paper on the list.",
-          starred: true
+          starred: true,
+          extended: [
+            "This is the lab's flagship 'real-world' paper: a person with quadriplegia uses a custom wearable interface to teleoperate a Hello Robot Stretch mobile manipulator inside their actual home, performing tasks like fetching dropped objects, retrieving items from cabinets, and bringing the user water. The wearable is the input layer — sip-and-puff or limited-motion controls mapped intelligently to robot DOFs — and the Stretch is the embodiment. The deployment is in-home, not a lab.",
+            "HRI 2024 Best Paper. The paper matters less for any specific algorithmic novelty than for the integration: a real disabled user, a commercially-available robot, a custom but tractable interface, and tasks the user actually requested. It's the closest thing in the academic literature to a 'demo you could ship as a product if you wrapped it in support and reliability.'",
+            "For Nick: assistive robotics for people with motor disabilities has a real payer (VA, Medicaid waivers in some states, private LTC insurance), an under-served user base, and now a deployable hardware substrate. The bottleneck has always been the behavior stack — and Erickson's lab is one of three groups globally that owns it. Any conversation about an in-home assistive-robotics company starts here."
+          ],
+          matter: "The cleanest 'this could be a product tomorrow' artifact on the list. Real home, real user, off-the-shelf robot. Ask Erickson if he's been approached."
         }
       ],
       commercialization: [
@@ -356,7 +392,13 @@ window.CMU_DATA = {
           link: "https://arxiv.org/abs/2501.03624",
           summary: "Open-source LLMs score MADRS depression interviews from transcripts alone; reaches near-human ICC on most items. Joint paper with Fernando De la Torre.",
           starred: true,
-          coauthors: ["delatorre"]
+          coauthors: ["delatorre"],
+          extended: [
+            "Same paper as the De la Torre entry — LLM-based scoring of MADRS depression interviews from transcripts, with near-human inter-rater agreement on most items, evaluated on 236 real clinical interviews from CAMI/McLean. From Morency's side, this represents the long-running depression-detection thread of the MultiComp lab finally meeting modern LLM capabilities.",
+            "What's distinct from Morency's prior depression work (DAIC-WOZ, behavioral biomarkers) is the use of open-source LLMs and zero-shot prompting rather than custom multimodal architectures trained on the in-domain corpus. That's a meaningful shift: the academic stack got simpler at the same time that clinical performance crossed the threshold. Less custom modeling means a faster, cheaper path to a productizable system.",
+            "For Nick: this is the strongest healthcare-AI cross-faculty signal of the day. The conversation with Morency at 1:30 can reference the same paper Fernando talked about at 9:15, and you can ask both — independently — what they think the right commercialization path is."
+          ],
+          matter: "Bring up the same paper in both meetings. Compare what each PI says about productizing it."
         },
         {
           title: "Dynamic and dyadic relationships between facial behavior, working alliance, and treatment outcomes during depression therapy",
@@ -365,7 +407,13 @@ window.CMU_DATA = {
           year: 2025,
           link: "https://scholar.google.com/scholar?q=Dynamic+dyadic+facial+behavior+working+alliance+depression+therapy+Morency",
           summary: "Clinical-psychology journal publication linking moment-to-moment facial behavior to therapy outcomes — Morency's work crossing into the JAMA-tier clinical literature.",
-          starred: true
+          starred: true,
+          extended: [
+            "This is a Journal of Consulting and Clinical Psychology paper — a flagship clinical-psychology venue, very different from the NeurIPS/CVPR worlds Morency usually publishes in. The study tracks facial behavior dynamically during therapy sessions and shows it has measurable, time-varying relationships with both the working alliance (the therapist-patient relationship) and treatment outcomes. The finding is that facial-behavior dynamics carry information that conventional verbal self-report measures don't.",
+            "What makes this strategically important is the venue: clinicians and clinical psychologists read JCCP, not ICML. Morency publishing there means his behavioral-AI thread is being taken seriously by the people who would actually be the clinical adopters of a behavioral-biomarker product. That's the bridge from 'lab benchmark' to 'clinical practice' that most multimodal-affect groups have been unable to build.",
+            "For Nick: this is the credibility paper. If you're pitching a behavioral-biomarker company into pharma CNS trials or telehealth providers, this is the paper you cite when the buyer asks 'do real psychiatrists believe this?' Morency's JCCP placement makes the answer 'yes.'"
+          ],
+          matter: "The clinical-credibility paper. Cite this when buyers ask whether real psychiatrists take behavioral AI seriously."
         },
         {
           title: "Social Genome: Grounded social reasoning abilities of multimodal models",
@@ -455,7 +503,13 @@ window.CMU_DATA = {
           link: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4900000",
           summary: "Position paper pushing back on 'AI welfare' as a category — argues it diverts attention from concrete harms. Co-authored with Maarten Sap.",
           starred: true,
-          coauthors: ["sap"]
+          coauthors: ["sap"],
+          extended: [
+            "A blunt position paper — the title is verbatim — arguing that the emerging 'AI welfare' research agenda (concerns about model suffering, model consent, model wellbeing) is a category error that diverts attention and resources from concrete, documented harms to actual humans interacting with AI systems. The paper is methodologically a philosophy / responsible-AI argument, not an empirical result.",
+            "What's strategically interesting is the authorship: the LTI Director and the most-prominent younger safety/social-NLP voice at CMU co-signing a strong public stance on what 'responsible AI' should and shouldn't mean. It signals where the institutional direction at CMU LTI is pointed — toward measurable user-facing harms, away from speculative model-welfare arguments.",
+            "For Nick: useful context for understanding what kind of safety/responsibility framing will resonate with this group. If you're building anything that touches AI ethics, frame the pitch around concrete user harms, evaluation, and accountability — not abstract model-internal considerations."
+          ],
+          matter: "Reveals how Diab and Sap define 'responsible AI' at CMU. Frame any AI-ethics pitch around concrete user harms, not model-internal concerns."
         },
         {
           title: "Sentipolis: Emotion-Aware Agents for Social Simulations",
@@ -465,7 +519,13 @@ window.CMU_DATA = {
           link: "https://scholar.google.com/scholar?q=Sentipolis+emotion+agents+Diab+Busso",
           summary: "Multi-agent social simulation with emotion-aware LLM agents — first verified Busso × Diab cross-LTI paper.",
           starred: true,
-          coauthors: ["busso"]
+          coauthors: ["busso"],
+          extended: [
+            "A multi-agent simulation environment populated by LLM-driven agents whose dialogue is conditioned on emotion states modeled by affective-computing techniques. The agents interact in social scenarios; the simulation tracks how emotion propagates, how relationships form, and how individual agents drift in response to social context. The architecture combines Diab's NLP / dialogue infrastructure with Busso's emotion-modeling apparatus.",
+            "The strategic signal here is the co-authorship. This is the first publicly verified joint paper between Diab (the LTI Director) and Busso (the recently-arrived affective-computing professor she recruited from UT Dallas). It establishes that the two are actively collaborating, which substantially raises the likelihood of joint commercial advisory or licensing conversations being productive.",
+            "For Nick: when meeting both of them, ask whether Sentipolis is academic-only or whether they see a product hiding in it — emotion-aware multi-agent simulation has obvious commercial uses in customer-service training, sales coaching, therapy practice tools, and game NPCs."
+          ],
+          matter: "First verified Busso × Diab paper. Both will be in the room consecutively (3:00 then 2:15). Ask whether they're already discussing commercializing it."
         },
         {
           title: "Beyond Understanding: Evaluating the Pragmatic Gap in LLMs' Cultural Processing of Figurative Language",
@@ -546,7 +606,13 @@ window.CMU_DATA = {
           link: "https://scholar.google.com/scholar?q=Sentipolis+Busso+Diab",
           summary: "Multi-agent social simulation with emotion-aware LLM agents — joint Busso × Diab.",
           starred: true,
-          coauthors: ["diab"]
+          coauthors: ["diab"],
+          extended: [
+            "Same Sentipolis paper as in Diab's section — a multi-agent social simulation where LLM-driven agents act under emotion conditioning, blending Busso's affective-computing background with Diab's dialogue and language modeling. From Busso's side, this is his first major paper produced after joining CMU LTI, and it puts emotion modeling into the multi-agent LLM stack rather than into the speech recognition or call-center pipeline where it has traditionally lived.",
+            "The methodological move worth noting: emotion as a *state variable* in agent simulation, persistent across turns and contagious between agents, rather than emotion as a *classification target* on individual utterances. That's the framing that connects affective computing to anything LLM-agent-ish (autonomous customer service, multi-agent gameplay, training simulators).",
+            "For Nick: Busso's MSP-PODCAST and IEMOCAP datasets are the substrate that almost every commercial emotion-AI product touches. Combining that data depth with Diab's frontier-LLM experience is an unusually strong commercial foundation if either is open to advising."
+          ],
+          matter: "The collaboration is brand new. The 30-min Busso slot is the right place to ask whether emotion-as-state-variable for LLM agents is a real product play."
         },
         {
           title: "Reasoning beyond Majority Vote: An Explainable SpeechLM Framework for Speech Emotion Recognition",
@@ -555,7 +621,13 @@ window.CMU_DATA = {
           year: 2026,
           link: "https://scholar.google.com/scholar?q=Reasoning+beyond+Majority+Vote+Busso",
           summary: "Speech LLM that produces *explanations* for its emotion predictions, not just labels — addresses the longstanding interpretability gap in SER systems.",
-          starred: true
+          starred: true,
+          extended: [
+            "Speech emotion recognition (SER) has lived for two decades as a classification pipeline: raw audio in, an emotion label out. The single biggest barrier to adoption — in call centers, healthcare, automotive — has been that nobody trusts a black-box label. This paper restructures the problem around a Speech Language Model that generates a natural-language explanation alongside the emotion prediction, citing prosodic and lexical evidence the way a human annotator would.",
+            "The 'beyond majority vote' framing in the title is a swipe at how SER datasets historically reduce annotator disagreement to a single label. The paper argues that for emotion specifically, the right output is a reasoned position, not a vote count, because the underlying construct is intrinsically subjective.",
+            "For Nick: explainable SER is the missing piece for high-stakes deployments. Healthcare voice-biomarker products, in-cabin driver monitoring with safety implications, and any contact-center QA system that affects employee performance reviews — all of them have been gated on 'can the model justify itself.' This is the academic answer."
+          ],
+          matter: "Explainable SER is what unlocks high-stakes deployments (healthcare, automotive, employee monitoring). ICASSP 2026."
         },
         {
           title: "MSP-Conversation: A Corpus for Naturalistic, Time-Continuous Emotion Recognition",
@@ -635,7 +707,13 @@ window.CMU_DATA = {
           year: 2025,
           link: "https://arxiv.org/abs/2410.00000",
           summary: "Shows that current LLMs produce homogeneous outputs across diverse users — a 'hivemind' effect that erodes pluralism. NeurIPS 2025 Best Paper.",
-          starred: true
+          starred: true,
+          extended: [
+            "The 'Artificial Hivemind' result demonstrates that despite producing fluent, varied prose, current frontier LLMs converge on an extremely narrow distribution of opinions, framings, and recommendations across users with very different backgrounds and intents. The paper introduces an evaluation framework for measuring this open-ended homogeneity and shows it's robust across model families, post-training methods, and prompting styles. NeurIPS 2025 Best Paper (Datasets & Benchmarks Track).",
+            "What makes this matter beyond academic interest: the homogeneity isn't a small effect, and it isn't bias in the usual political-axis sense — it's a structural collapse of perspective diversity in generated text. As more decisions get mediated by LLMs (search, content recommendations, education, advice), this convergence has measurable population-level consequences.",
+            "For Nick: this is the academic foundation for any 'pluralistic AI' company — RLHF data infrastructure that stratifies by annotator identity, model finetuning services that produce intentionally divergent variants, eval platforms that score homogeneity-vs-pluralism as a metric. The EU AI Act and constitutional-AI conversations both create demand-side pull for this."
+          ],
+          matter: "The NeurIPS 2025 Best Paper. The empirical foundation for a 'pluralistic AI' product category. Ask if Sap thinks the gap is venture-fundable."
         },
         {
           title: "PolyGuard: A Multilingual Safety Moderation Tool for 17 Languages",
@@ -733,7 +811,13 @@ window.CMU_DATA = {
           link: "https://scholar.google.com/scholar?q=Virtual+home+staging+relighting+panorama+Narasimhan",
           summary: "HDR panorama in, relit and re-furnished interior out under measured outdoor illumination. Joint with Narasimhan — the verified cross-RI / Architecture collaboration of the day.",
           starred: true,
-          coauthors: ["narasimhan"]
+          coauthors: ["narasimhan"],
+          extended: [
+            "Same paper as in Narasimhan's section. From Sawyer's side, this is the artifact that shows her building-science / daylighting research can plug directly into modern computational-imaging pipelines: the building-physics priors that anchor the relighting are exactly what an architect / building scientist contributes that a CV PhD cannot.",
+            "The Narasimhan-Sawyer pairing is a rare combination — there are very few people on either side of the CS/architecture line who can credibly speak both languages. That this paper exists at all signals that the two of them are willing to do interdisciplinary work, which lowers the friction for any commercial conversation that touches both worlds.",
+            "For Nick: real-estate-tech, AEC software, and digital-twin platforms are the obvious commercial wrappers. If Sawyer is open to advising, she's a uniquely-qualified climate-tech-meets-AI co-founder profile."
+          ],
+          matter: "Sawyer's CS-fluent building-science profile is rare. If she's open to advising or co-founding, that's a high-leverage relationship."
         },
         {
           title: "MEBA: AI-powered Precise Building Monthly Energy Benchmarking Approach",
@@ -742,7 +826,13 @@ window.CMU_DATA = {
           year: 2024,
           link: "https://scholar.google.com/scholar?q=MEBA+AI+Building+Energy+Sawyer",
           summary: "ML approach for monthly building energy benchmarking that beats annual-level benchmarks — the data plumbing for utility DSM and city decarbonization programs.",
-          starred: true
+          starred: true,
+          extended: [
+            "Most building-energy benchmarking systems compare buildings on annual totals — a single energy-intensity number per year. MEBA pushes this to a monthly resolution using an ML model that learns the seasonal energy signatures of building stock and produces calibrated monthly benchmarks. The Applied Energy venue is the field's leading journal for this kind of system-level work.",
+            "Monthly resolution matters commercially because utility demand-side-management programs, building-disclosure laws, and city decarbonization plans all operate on monthly or shorter horizons — annual benchmarks are too coarse to drive interventions. A vendor that can provide accurate monthly benchmarks at city scale becomes the data layer underneath whatever retrofit, financing, or compliance product gets built on top.",
+            "For Nick: this is the unsexy infrastructure layer for any climate-tech-meets-buildings product. The team includes Vivian Loftness — the CMU building-performance grandmother — which gives the work institutional weight beyond Sawyer's lab alone."
+          ],
+          matter: "The data-plumbing for any city or utility decarbonization product. Sawyer + Loftness = institutional weight in the AEC world."
         },
         {
           title: "Generalized building energy and carbon emissions benchmarking with post-prediction analysis",

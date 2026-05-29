@@ -3,6 +3,17 @@
 const D = window.CMU_DATA;
 const facById = Object.fromEntries(D.faculty.map(f => [f.id, f]));
 
+// Build a flat paper registry so cards can reference papers by id
+const paperById = {};
+D.faculty.forEach(f => {
+  (f.papers || []).forEach((p, i) => {
+    const pid = `${f.id}-p${i}`;
+    p.__pid = pid;
+    p.__owner = f.id;
+    paperById[pid] = p;
+  });
+});
+
 // -------- stats
 function renderStats() {
   const allPapers = D.faculty.reduce((acc, f) => acc + (f.papers ? f.papers.length : 0), 0);
@@ -83,10 +94,10 @@ function renderFaculty() {
     }).join("");
 
     const papersHtml = (f.papers || []).map(p => {
-      const coauth = p.coauthors ? p.coauthors.map(cid => facById[cid] ? `<a class="paper-cite" href="#${cid}">↳ co-authored with ${facById[cid].name}</a>` : "").join(" ") : "";
-      return `<div class="paper ${p.starred ? 'starred' : ''}">
+      const coauth = p.coauthors ? p.coauthors.map(cid => facById[cid] ? `<a class="paper-cite" href="#${cid}" onclick="event.stopPropagation()">↳ co-authored with ${facById[cid].name}</a>` : "").join(" ") : "";
+      return `<div class="paper ${p.starred ? 'starred' : ''}" data-pid="${p.__pid}">
         <div class="paper-head">
-          <div class="paper-title"><a href="${p.link}" target="_blank" rel="noopener">${p.title}</a></div>
+          <div class="paper-title" role="button" tabindex="0">${p.title} <span class="paper-more">↗</span></div>
           <div class="paper-venue">${p.venue} · ${p.year}</div>
         </div>
         <div class="paper-authors">${p.authors}</div>
@@ -250,6 +261,78 @@ function renderNetwork() {
     `;
   }
 }
+
+// -------- paper modal
+function openPaperModal(pid) {
+  const p = paperById[pid];
+  if (!p) return;
+  const owner = facById[p.__owner];
+  const content = document.getElementById("modal-content");
+
+  // build extended paragraphs — fall back to summary if no extended
+  let body = "";
+  if (p.extended && p.extended.length) {
+    body = p.extended.map(par => `<p>${par}</p>`).join("");
+  } else {
+    body = `<p>${p.summary}</p>`;
+  }
+
+  // coauthor chips for any verified within-list co-author
+  let coauthChips = "";
+  if (p.coauthors && p.coauthors.length) {
+    coauthChips = p.coauthors.map(cid => {
+      const f = facById[cid];
+      return f ? `<a class="modal-coauth" href="#${cid}" data-jump>${f.name}</a>` : "";
+    }).join("");
+  }
+
+  // matter section — pulled from paper.matter if present
+  const matterHtml = p.matter ? `<div class="modal-section"><h4>Why this matters for the meeting</h4><p>${p.matter}</p></div>` : "";
+
+  content.innerHTML = `
+    <div class="modal-eyebrow">${owner.name} · ${owner.lab}</div>
+    <h3 class="modal-title" id="modal-title">${p.title}</h3>
+    <div class="modal-meta">${p.venue} · ${p.year}${p.starred ? " · ★ priority read" : ""}</div>
+    <div class="modal-authors">${p.authors}</div>
+
+    ${coauthChips ? `<div class="modal-section"><h4>Verified co-author on this list</h4>${coauthChips}</div>` : ""}
+
+    <div class="modal-section">
+      <h4>What the paper does</h4>
+      ${body}
+    </div>
+
+    ${matterHtml}
+
+    <div class="modal-link-row">
+      <a href="${p.link}" target="_blank" rel="noopener" class="primary">Open paper ↗</a>
+      <a href="#${owner.id}" data-jump>${owner.name.split(" ").slice(-1)[0]}'s briefing →</a>
+    </div>
+  `;
+
+  document.getElementById("modal").classList.add("open");
+  document.body.classList.add("modal-open");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.classList.remove("modal-open");
+}
+
+// click anywhere on the paper card → open modal
+document.addEventListener("click", e => {
+  if (e.target.closest(".paper-cite") || e.target.closest("a")) return;
+  const paper = e.target.closest(".paper");
+  if (paper && paper.dataset.pid) {
+    openPaperModal(paper.dataset.pid);
+    return;
+  }
+  if (e.target.closest("[data-close]")) closeModal();
+  if (e.target.closest("[data-jump]")) closeModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+});
 
 // -------- smooth scroll on anchor click
 document.addEventListener("click", e => {
